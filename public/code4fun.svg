@@ -1,0 +1,7 @@
+<!-- save as public/code4fun-favicon.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Code4Fun favicon">
+  <rect width="128" height="128" rx="20" fill="#000000"></rect>
+  <!-- inner rounded panel for depth -->
+  <rect x="8" y="8" width="112" height="112" rx="16" fill="#0b0b0b"></rect>
+  <text x="64" y="78" text-anchor="middle" font-family="Inter, Roboto, 'Segoe UI', sans-serif" font-weight="800" font-size="36" fill="#ffffff">&lt;/&gt;</text>
+</svg>

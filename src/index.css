@@ -1,0 +1,329 @@
+/* src/index.css - UPDATED: terminal fully black, buttons inside terminal */
+
+/* ---------- Tailwind import ---------- */
+@import "tailwindcss";
+
+/* ---------- Theme variables ---------- */
+:root {
+  /* cream / parchment feel (warmer, softer) */
+  --bg-1: #e0d3b3;               /* page background — creamy parchment */
+  --bg-2: #fffdf8;               /* slightly lighter panels */
+  --panel-header: linear-gradient(180deg,#fdfbf7,#f8f5ef);
+  --card-grad: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,245,239,0.98));
+  --muted: #6b7280;
+  --text: #14110f;
+  --accent-cyan: #0ea5ff;
+  --accent-sun: #ff7a5a;
+
+  /* terminal (deep matte black) */
+  --code-bg: #000000;
+  --code-bg-2: #0a0a0a;
+  --code-color: #f2f5f8;
+  --code-accent: #00c7ff;
+  --code-selection-start: rgba(0,199,255,0.12);
+  --code-selection-end: rgba(255,122,90,0.06);
+}
+
+/* dark page toggle (still keeps terminal black) */
+html.dark {
+  --bg-1: #040613;
+  --bg-2: #071028;
+  --panel-header: linear-gradient(180deg,#07101a,#050712);
+  --card-grad: linear-gradient(160deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
+  --muted: #9aa6b2;
+  --text: #e6eef6;
+
+  /* terminal unchanged (black) */
+  --code-bg: #000000;
+  --code-color: #e6eef6;
+}
+
+/* ---------- Base / page ---------- */
+* { box-sizing: border-box; }
+html,body,#root { height: 100%; margin: 0; }
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(14,165,255,0.03), transparent 12%),
+              radial-gradient(900px 400px at 90% 80%, rgba(255,122,90,0.02), transparent 8%),
+              var(--bg-1);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Panels & chrome ---------- */
+.panel {
+  background: var(--card-grad);
+  border: 1px solid rgba(11,18,32,0.06);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.05);
+}
+
+/* header small */
+.panel-header {
+  background: var(--panel-header);
+}
+
+/* ---------- Editor Tabs (toolbar + tabs) ---------- */
+.editor-tabs {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:0;
+  border-radius:10px;
+  overflow:visible;
+}
+.editor-dots { display:flex; gap:6px; align-items:center; padding-right:0.5rem; }
+.editor-dots .dot { width:10px; height:10px; border-radius:50%; display:inline-block; opacity:0.95; box-shadow:0 3px 10px rgba(0,0,0,0.06); }
+.editor-dots .dot.red { background:#ff5f56; }
+.editor-dots .dot.yellow { background:#ffbd2e; }
+.editor-dots .dot.green { background:#27c93f; }
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--muted);
+  display:inline-flex;
+  gap:0.5rem;
+  align-items:center;
+  cursor:pointer;
+  transition: all 160ms ease;
+}
+.tab-btn:hover { transform: translateY(-2px); color:var(--text); box-shadow: 0 8px 24px rgba(14,165,255,0.06); }
+.tab-btn.active {
+  background: linear-gradient(90deg, rgba(14,165,255,0.06), rgba(255,122,90,0.03));
+  color: var(--text);
+  border: 1px solid rgba(14,165,255,0.06);
+  box-shadow: 0 10px 30px rgba(115, 152, 174, 0.04);
+}
+
+/* dot color indicators */
+.dot-indicator { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:4px; opacity:0.9; box-shadow:0 6px 14px rgba(0,0,0,0.06); }
+.dot-indicator.html { background: #f97316; }
+.dot-indicator.css { background: #0ea5ff; }
+.dot-indicator.js { background: #facc15; }
+
+/* ---------- SEARCH INPUT & BUTTONS ---------- */
+.input-ghost {
+  background: #ffffff;
+  border: 1px solid rgba(11,18,32,0.06);
+  color: var(--text);
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  width: 100%;
+  font-size: .95rem;
+  transition: box-shadow .15s ease, transform .12s ease;
+}
+.input-ghost::placeholder { color: #8b94a4; }
+.input-ghost:focus {
+  box-shadow: 0 6px 30px rgba(14,165,255,0.06), 0 0 0 3px rgba(14,165,255,0.06);
+  border-color: rgba(14,165,255,0.18);
+  transform: translateY(-1px);
+}
+
+.btn {
+  background: #ffffff;
+  border: 1px solid rgba(11,18,32,0.06);
+  color: var(--text);
+  padding: .5rem .85rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s;
+}
+.btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(14,165,255,0.06);
+  filter:brightness(0.98);
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px dashed rgba(11,18,32,0.06);
+}
+
+.btn-small {
+  background: #ffffff;
+  border: 1px solid rgba(11,18,32,0.06);
+  padding:6px 10px;
+  border-radius:8px;
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  cursor:pointer;
+  transition:transform .12s ease;
+}
+.btn-small:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(14,165,255,0.06); }
+
+.btn-accent {
+  background: linear-gradient(90deg, var(--accent-cyan), #7be8ff);
+  color: #021016;
+  border: none;
+  box-shadow: 0 8px 28px rgba(0,199,255,0.12);
+}
+
+/* ---------- LARGER TERMINAL AREA WITH TOOLBAR INSIDE ---------- */
+.editor-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 820px;
+  position: relative;
+  background: linear-gradient(180deg, var(--code-bg), var(--code-bg-2));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 26px 70px rgba(0,0,0,0.45),
+              inset 0 1px 0 rgba(255,255,255,0.01);
+  overflow: hidden;
+}
+
+/* toolbar inside the black terminal */
+.editor-content .editor-toolbar {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* toolbar buttons inside terminal */
+.editor-content .editor-toolbar .btn,
+.editor-content .editor-toolbar .btn-small,
+.editor-content .editor-toolbar .tab-btn {
+  background: rgba(255,255,255,0.06);
+  color: var(--code-color);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+.editor-content .editor-toolbar .btn-accent {
+  background: linear-gradient(90deg, rgba(14,165,255,0.14), rgba(123,232,255,0.08));
+  color: var(--code-color);
+  border: 1px solid rgba(0,199,255,0.12);
+  box-shadow: 0 10px 28px rgba(0,199,255,0.06);
+}
+
+/* HTML/CSS/JS tab buttons */
+.editor-content .tab-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: rgba(230,238,246,0.9);
+  background: transparent;
+  border: 1px solid transparent;
+}
+.editor-content .tab-btn.active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  color: var(--code-color);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* ---------- actual code surface ---------- */
+.code-surface {
+  width: 100%;
+  height: auto;
+  min-height: 720px;
+  resize: vertical;
+  border: none;
+  outline: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--code-color);
+  background: transparent;
+  padding: calc(1.2rem + 64px) 1.4rem 1.4rem 1.4rem; /* top padding below toolbar */
+  border-radius: 8px;
+  box-shadow: none;
+  overflow: auto;
+  display: block;
+  caret-color: var(--code-accent);
+  transition: transform 0.12s ease;
+}
+
+.code-surface::selection {
+  background: linear-gradient(90deg, var(--code-selection-start), var(--code-selection-end));
+}
+.code-surface::placeholder { color: rgba(230,238,246,0.18); }
+.code-surface:hover { transform: translateY(-2px); }
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 1024px) {
+  .editor-content { min-height: 680px; }
+  .code-surface { min-height: 600px; font-size: 15px; padding-top: calc(1rem + 56px); }
+  .editor-content .editor-toolbar { top: 12px; left: 12px; right: 12px; }
+}
+@media (max-width: 768px) {
+  .editor-content { min-height: 520px; border-radius: 10px; }
+  .code-surface { min-height: 480px; font-size: 16px; padding-top: calc(0.9rem + 56px); }
+  .editor-content .editor-toolbar { top: 10px; left: 10px; right: 10px; gap:8px; }
+  .editor-content .editor-toolbar .btn,
+  .editor-content .editor-toolbar .btn-small,
+  .editor-content .editor-toolbar .tab-btn {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}
+
+/* ---------- snippet panel ---------- */
+.snippet-panel {
+  position: absolute;
+  right: 1rem;
+  top: 56px;
+  width: min(520px, 92%);
+  max-height: 56vh;
+  background: var(--bg-2);
+  border: 1px solid rgba(11,18,32,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(2,6,23,0.12);
+  z-index: 60;
+}
+.snippet-top { background: transparent; }
+.snippet-list { max-height: calc(56vh - 56px); overflow:auto; }
+.snippet-item { width:100%; text-align:left; padding: 10px 14px; border-bottom:1px solid rgba(11,18,32,0.03); cursor:pointer; background:transparent; transition: background .12s ease, transform .12s ease; }
+.snippet-item:hover { background: linear-gradient(90deg, rgba(14,165,255,0.03), rgba(255,122,90,0.02)); transform: translateY(-2px); }
+.snippet-title { font-weight:700; color: var(--text); margin-bottom:6px; }
+.snippet-preview { font-family: ui-monospace, Menlo, Monaco, "Roboto Mono", monospace; font-size:12px; color:var(--muted); background:transparent; margin:0; padding:0; max-height:60px; overflow:hidden; white-space:pre-wrap; }
+
+/* ---------- Scrollbars ---------- */
+.snippet-list::-webkit-scrollbar, .editor-content::-webkit-scrollbar, .code-surface::-webkit-scrollbar { width:10px; height:10px; }
+.snippet-list::-webkit-scrollbar-thumb, .editor-content::-webkit-scrollbar-thumb, .code-surface::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00a7d9,#5bdcff);
+  border-radius:8px;
+  opacity:0.95;
+}
+
+/* ---------- Flex safety ---------- */
+.editor-full-height,
+.editor-root,
+.editor-wrapper,
+.editor-tabs,
+.EditorTabs,
+.cm-editor,
+.CodeMirror,
+.CodeMirror-wrap,
+.monaco-editor,
+.monaco-scrollable-element,
+.react-codemirror2,
+.vscode-editor-container,
+.editor-tabs__content,
+.codemirror,
+.monaco-scrollable,
+.editor-content {
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
