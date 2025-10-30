@@ -17,7 +17,8 @@ export default function SearchPanel() {
   const [results, setResults] = useState<SEQuestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [picked, setPicked] = useState<SEQuestion | null>(null);
-  const [page, setPage] = useState(1);
+  // If you will use setPage later, keep just the setter name like this:
+
   const [cacheHit, setCacheHit] = useState(false);
 
   // cross-platform-safe timeout ref

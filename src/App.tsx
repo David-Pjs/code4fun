@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import JSZip from "jszip";
 
 import EditorTabs from "./components/EditorTabs";

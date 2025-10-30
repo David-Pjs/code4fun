@@ -1,5 +1,5 @@
 // src/components/Toolbar.tsx
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PlayIcon, ArrowDownTrayIcon, ArrowUpTrayIcon, ArrowPathIcon, DocumentArrowDownIcon } from "@heroicons/react/24/solid";
 import { motion, AnimatePresence } from "framer-motion";
 

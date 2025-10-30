@@ -1,5 +1,5 @@
 // src/components/EditorTabs.tsx
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SparklesIcon, PlusIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import type { Project } from "../types/project";
@@ -57,7 +57,8 @@ function normalizeSnippetForBeginners(snippet: string, kind: SnipKind) {
     const closingRe = new RegExp(`</${t}>`, "gi");
     if (closingRe.test(s)) s = s.replace(closingRe, "");
     const openRe = new RegExp(`<${t}([^>]*)>`, "i");
-    s = s.replace(openRe, (m: string, attrs: string) => `<${t}${attrs || ""} />`);
+s = s.replace(openRe, (_m: string, attrs: string) => `<${t}${attrs || ""} />`);
+
   }
   const opening = s.match(/^<([a-z0-9-]+)(\s|>)/i);
   if (opening) {
